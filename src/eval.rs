@@ -241,7 +241,7 @@ impl Context {
         }
     }
 
-    fn get_reg(&mut self, r: &Register) -> u64 {
+    fn get_reg(&self, r: &Register) -> u64 {
         match r {
             Register::X0 => self.x0,
             Register::X1 => self.x1,
