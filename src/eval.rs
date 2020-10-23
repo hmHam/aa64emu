@@ -93,7 +93,7 @@ fn eval_mov(ctx: &mut Context, dst: &Register, src: &RegOrNum) {
         }
         RegOrNum::Reg(r) => {
             let n = ctx.get_reg(r);
-            ctx.set_reg(r, n);
+            ctx.set_reg(dst, n);
         }
     }
 }

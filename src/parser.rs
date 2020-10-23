@@ -195,9 +195,6 @@ fn parse_reg(i: &str) -> IResult<&str, Register> {
     let (i, val) = alt((
         alt((
             tag("x0"),
-            tag("x1"),
-            tag("x2"),
-            tag("x3"),
             tag("x4"),
             tag("x5"),
             tag("x6"),
@@ -227,6 +224,9 @@ fn parse_reg(i: &str) -> IResult<&str, Register> {
             tag("x28"),
             tag("x29"),
             tag("x30"),
+            tag("x1"),
+            tag("x2"),
+            tag("x3"),
         )),
     ))(i)?;
 
