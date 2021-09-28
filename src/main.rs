@@ -19,14 +19,15 @@ fn main() {
         }
     };
 
+    // パース
     let result = parser::parse_asm(&content);
     match result {
         Ok((_, ops)) => {
-            let ctx = eval::run(&ops);
-            println!("result: {:#?}", ctx);
+            let ctx = eval::run(&ops); // 実行
+            println!("result: {:#?}", ctx); // 実行結果を表示
         }
         Err(e) => {
-            println!("parse error: {:#?}", e);
+            println!("parse error: {:#?}", e); // エラーを表示
         }
     }
 }
