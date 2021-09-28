@@ -1,6 +1,8 @@
 use super::parser::{ArithOpcode, BranchOpcode, Op, RegOrNum, Register};
+use core::panic;
+use std::cmp::Ordering;
 
-// cmp命令で生成される条件
+/// 比較命令実行後の結果
 #[derive(Debug, Eq, PartialEq)]
 pub enum Condition {
     Eq, // ==
@@ -8,10 +10,10 @@ pub enum Condition {
     Gt, // >
 }
 
-// レジスタ
+/// AArch64レジスタ
 #[derive(Debug)]
 pub struct Context {
-    pub cond: Condition, // cmp命令実行後の結果を保存するレジスタ
+    pub cond: Condition,
     pub x0: u64,
     pub x1: u64,
     pub x2: u64,
@@ -45,16 +47,17 @@ pub struct Context {
     pub x30: u64,
 }
 
-pub fn run(ops: &Vec<Op>) -> Context {
+/// 実行
+pub fn run(ops: &[Op]) -> Context {
     // レジスタの初期化
     let mut ctx = Context::new();
 
     let mut pc = 0; // プログラムカウンタ
     loop {
-        if pc == ops.len() {
-            return ctx;
-        } else if pc > ops.len() {
-            panic!("invalid PC");
+        match pc.cmp(&ops.len()) {
+            Ordering::Equal => return ctx,
+            Ordering::Greater => panic!("invalid PC"),
+            _ => (),
         }
 
         // オペコードの種類によって実行する処理を切り替える
@@ -65,12 +68,14 @@ pub fn run(ops: &Vec<Op>) -> Context {
             Op::Cmp(reg1, reg2) => {
                 eval_cmp(&mut ctx, reg1, reg2);
             }
-            Op::ArithOp(opcode, reg1, reg2, reg3) => {
+            Op::Arith(opcode, reg1, reg2, reg3) => {
                 // ここを実装
                 // 次のような関数を定義して実装せよ
                 // eval_arith(&mut ctx, opcode, reg1, reg2, reg3);
+                // todo!()は削除すること
+                todo!()
             }
-            Op::BranchOp(opcode, line) => {
+            Op::Branch(opcode, line) => {
                 if eval_branch(&ctx, opcode) {
                     pc = *line as usize;
                     continue;
@@ -82,10 +87,14 @@ pub fn run(ops: &Vec<Op>) -> Context {
     }
 }
 
+/// 比較命令を実行
 fn eval_cmp(ctx: &mut Context, reg1: &Register, reg2: &Register) {
     // ここを実装
+    // todo!()は削除すること
+    todo!()
 }
 
+/// mov命令を実行
 fn eval_mov(ctx: &mut Context, dst: &Register, src: &RegOrNum) {
     match src {
         RegOrNum::Num(n) => {
@@ -98,13 +107,16 @@ fn eval_mov(ctx: &mut Context, dst: &Register, src: &RegOrNum) {
     }
 }
 
+/// 分岐命令を実行
 fn eval_branch(ctx: &Context, opcode: &BranchOpcode) -> bool {
     match opcode {
         BranchOpcode::Beq => ctx.cond == Condition::Eq,
         BranchOpcode::Blt => ctx.cond == Condition::Lt,
+        BranchOpcode::Bgt => ctx.cond == Condition::Gt,
     }
 }
 
+/// コンテキストを生成、設定、取得するためのインターフェース
 impl Context {
     fn new() -> Context {
         Context {
