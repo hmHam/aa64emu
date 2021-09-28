@@ -212,21 +212,12 @@ pub fn parse_cmp(i: &str) -> IResult<&str, Op> {
 fn parse_reg(i: &str) -> IResult<&str, Register> {
     let (i1, val) = alt((
         alt((
-            tag("x0"),
-            tag("x4"),
-            tag("x5"),
-            tag("x6"),
-            tag("x7"),
-            tag("x8"),
-            tag("x9"),
             tag("x10"),
             tag("x11"),
             tag("x12"),
             tag("x13"),
             tag("x14"),
             tag("x15"),
-        )),
-        alt((
             tag("x16"),
             tag("x17"),
             tag("x18"),
@@ -242,9 +233,18 @@ fn parse_reg(i: &str) -> IResult<&str, Register> {
             tag("x28"),
             tag("x29"),
             tag("x30"),
+        )),
+        alt((
+            tag("x0"),
             tag("x1"),
             tag("x2"),
             tag("x3"),
+            tag("x4"),
+            tag("x5"),
+            tag("x6"),
+            tag("x7"),
+            tag("x8"),
+            tag("x9"),
         )),
     ))(i)?;
 
