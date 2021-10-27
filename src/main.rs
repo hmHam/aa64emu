@@ -6,7 +6,7 @@ fn main() {
     // コマンドライン引数の検査
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        println!("以下のようにファイル名を指定して実行してください\ncargo run examples/ex1.lambda");
+        println!("以下のようにファイル名を指定して実行してください\ncargo run examples/ex1.S");
         return;
     }
 
