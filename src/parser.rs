@@ -95,6 +95,7 @@ pub fn parse_asm(input: &str) -> IResult<&str, Vec<Op>> {
             tag("div"),
             tag("b.eq"),
             tag("b.lt"),
+            tag("b.gt"),
         ))(i)?;
 
         let (i, op) = match val {
