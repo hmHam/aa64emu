@@ -13,7 +13,8 @@
 ## 修正履歴
 
 - 2021年10月28日
-  - b.gtのパーサを追加
+  - 以下のissueを修正（b.gtのパーサを追加）
+    - https://github.com/ytakano-lecture/aa64emu/issues/3
 - 2021年09月28日
   - コメントを追加
   - リファクタリング
